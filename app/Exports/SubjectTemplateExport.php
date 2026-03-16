@@ -2,21 +2,26 @@
 
 namespace App\Exports;
 
+use Maatwebsite\Excel\Concerns\FromArray;
 use Maatwebsite\Excel\Concerns\WithHeadings;
-use Maatwebsite\Excel\Concerns\WithTitle;
-use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 
-class SubjectTemplateExport implements WithHeadings, WithTitle, ShouldAutoSize
+class SubjectTemplateExport implements FromArray, WithHeadings
 {
-    public function headings(): array
+    public function array(): array
     {
+        // Contoh data untuk template
         return [
-            'nama_mata_pelajaran'
+            ['MTK', 'Matematika', 'Hadir'],
+            ['PAI', 'Pendidikan Agama Islam', 'Hadir'],
         ];
     }
 
-    public function title(): string
-    {
-        return 'Template Import Mapel';
-    }
+   public function headings(): array
+{
+    return [
+        'kode_mapel',          // Ini akan menjadi $row['kode_mapel']
+        'nama_mata_pelajaran', // Ini akan menjadi $row['nama_mata_pelajaran']
+        'status'
+    ];
+}
 }

@@ -60,11 +60,18 @@ class TeacherController extends Controller
 
     // Fitur Import Excel
     public function import(Request $request) 
-    {
-        $request->validate(['file' => 'required|mimes:xlsx,xls,csv']);
+{
+    $request->validate([
+        'file' => 'required|mimes:xlsx,xls,csv|max:2048'
+    ]);
+
+    try {
         Excel::import(new TeachersImport, $request->file('file'));
         return back()->with('success', 'Data Guru berhasil diimport!');
+    } catch (\Exception $e) {
+        return back()->with('error', 'Gagal: Periksa kembali format file Anda.');
     }
+}
 
     // Fitur Download Template Excel (XLSX)
     public function downloadTemplate()

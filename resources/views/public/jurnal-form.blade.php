@@ -4,8 +4,25 @@
 <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
     
     <div class="text-center mb-10">
-        <h1 class="text-3xl md:text-4xl font-extrabold tracking-tight mb-2">Formulir Jurnal Mengajar</h1>
+        <h1 class="text-3xl md:text-4xl font-extrabold tracking-tight mb-2 text-white">Formulir Jurnal Mengajar | MTs Peskil Poasia</h1>
         <p class="text-slate-400">Silakan isi jurnal kegiatan belajar mengajar Anda.</p>
+    </div>
+
+    <div class="mb-8 bg-emerald-500/10 border border-emerald-500/20 rounded-2xl p-5 flex flex-col sm:flex-row items-center justify-between gap-4 shadow-lg shadow-emerald-500/5">
+        <div class="flex items-center gap-4">
+            <div class="bg-emerald-500/20 p-3 rounded-xl text-emerald-400">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path>
+                </svg>
+            </div>
+            <div class="text-center sm:text-left">
+                <h4 class="text-white font-bold text-sm md:text-base">Lihat Rekapitulasi Jurnal</h4>
+                <p class="text-slate-400 text-xs">Pantau data jurnal yang sudah masuk melalui halaman publik.</p>
+            </div>
+        </div>
+        <a href="{{ route('journals.public') }}" class="w-full sm:w-auto text-center bg-emerald-600 hover:bg-emerald-500 text-white px-6 py-2.5 rounded-xl text-sm font-bold transition-all shadow-lg shadow-emerald-600/20 flex items-center justify-center gap-2">
+            Buka Rekap ↗
+        </a>
     </div>
 
     @if(session('success'))
@@ -53,7 +70,9 @@
                     </select>
                     @error('subject_id') <span class="text-red-400 text-xs mt-1">{{ $message }}</span> @enderror
                 </div>
+            </div>
 
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                     <label class="block mb-2 text-sm font-medium text-slate-300">Kelas *</label>
                     <select name="classroom_id" required class="bg-slate-900 border border-slate-700 text-white text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-3 transition-colors">

@@ -8,7 +8,8 @@
                     Hapus Terpilih (<span id="count-checked">0</span>)
                 </button>
 
-                <button onclick="document.getElementById('modal-import').classList.remove('hidden')" class="bg-emerald-600 hover:bg-emerald-500 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors shadow-lg shadow-emerald-500/30">
+                <button onclick="document.getElementById('modal-import').classList.remove('hidden')" class="bg-emerald-600 hover:bg-emerald-500 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors shadow-lg shadow-emerald-500/30 flex items-center gap-2">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
                     Import Excel
                 </button>
                 <a href="{{ route('teachers.create') }}" class="bg-blue-600 hover:bg-blue-500 text-white px-4 py-2 rounded-lg text-sm font-medium shadow-lg shadow-blue-500/30">+ Tambah Guru</a>
@@ -20,6 +21,9 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             @if(session('success'))
                 <div class="mb-4 bg-green-500/10 border border-green-500/20 text-green-400 px-4 py-3 rounded-lg">{{ session('success') }}</div>
+            @endif
+            @if(session('error'))
+                <div class="mb-4 bg-red-500/10 border border-red-500/20 text-red-400 px-4 py-3 rounded-lg">{{ session('error') }}</div>
             @endif
 
             <form id="form-bulk-delete" action="{{ route('teachers.bulkDelete') }}" method="POST">
@@ -53,7 +57,13 @@
                                         </span>
                                     </td>
                                     <td class="px-6 py-4 text-right">
-                                        <a href="{{ route('teachers.edit', $teacher->id) }}" class="text-blue-400 hover:underline mr-3">Edit</a>
+                                        <div class="flex justify-end items-center gap-3">
+                                            <a href="{{ route('teachers.edit', $teacher->id) }}" class="text-blue-400 hover:text-blue-300 transition-colors">Edit</a>
+                                            <form action="{{ route('teachers.destroy', $teacher->id) }}" method="POST" onsubmit="return confirm('Hapus guru ini?')">
+                                                @csrf @method('DELETE')
+                                                <button type="submit" class="text-red-400 hover:text-red-300 transition-colors">Hapus</button>
+                                            </form>
+                                        </div>
                                     </td>
                                 </tr>
                                 @empty
@@ -68,8 +78,35 @@
         </div>
     </div>
 
-    <div id="modal-import" class="hidden fixed inset-0 z-50 overflow-y-auto">
+    <div id="modal-import" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-sm">
+        <div class="bg-slate-800 border border-slate-700 w-full max-w-md rounded-2xl shadow-2xl overflow-hidden">
+            <div class="px-6 py-4 border-b border-slate-700 flex justify-between items-center">
+                <h3 class="text-lg font-semibold text-white">Import Data Guru</h3>
+                <button onclick="document.getElementById('modal-import').classList.add('hidden')" class="text-slate-400 hover:text-white">&times;</button>
+            </div>
+            
+            <form action="{{ route('teachers.import') }}" method="POST" enctype="multipart/form-data" class="p-6">
+                @csrf
+                <div class="mb-6 text-sm text-slate-400">
+                    <p class="mb-2">Silakan gunakan template Excel yang telah disediakan agar data terbaca dengan benar oleh sistem.</p>
+                    <a href="{{ route('teachers.template') }}" class="text-blue-400 hover:underline flex items-center gap-1">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+                        Download Template Excel
+                    </a>
+                </div>
+
+                <div class="mb-6">
+                    <label class="block text-sm font-medium text-slate-300 mb-2">Pilih File (.xlsx / .csv)</label>
+                    <input type="file" name="file" required class="block w-full text-sm text-slate-400 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-slate-700 file:text-slate-300 hover:file:bg-slate-600 border border-slate-700 rounded-lg bg-slate-900/50">
+                </div>
+
+                <div class="flex justify-end gap-3">
+                    <button type="button" onclick="document.getElementById('modal-import').classList.add('hidden')" class="px-4 py-2 text-sm font-medium text-slate-300 hover:text-white transition-colors">Batal</button>
+                    <button type="submit" class="bg-emerald-600 hover:bg-emerald-500 text-white px-6 py-2 rounded-lg text-sm font-medium transition-all shadow-lg shadow-emerald-500/20">Mulai Import</button>
+                </div>
+            </form>
         </div>
+    </div>
 
     <script>
         const checkAll = document.getElementById('check-all');
@@ -97,7 +134,7 @@
         });
 
         function confirmBulkDelete() {
-            if (confirm('Apakah Anda yakin ingin menghapus semua guru yang dipilih? Tindakan ini tidak bisa dibatalkan.')) {
+            if (confirm('Apakah Anda yakin ingin menghapus ' + document.querySelectorAll('.teacher-checkbox:checked').length + ' data guru yang dipilih?')) {
                 document.getElementById('form-bulk-delete').submit();
             }
         }

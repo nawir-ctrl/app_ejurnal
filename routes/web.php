@@ -9,10 +9,16 @@ use App\Http\Controllers\ClassroomController;
 use App\Http\Controllers\AdminJournalController;
 use App\Http\Controllers\SchoolProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\JournalController;
 
 // Rute Publik (Akses HP/Tamu)
 Route::get('/', [PublicJournalController::class, 'create'])->name('home');
 Route::post('/jurnal', [PublicJournalController::class, 'store'])->name('jurnal.store');
+
+// Rute untuk publik melihat jurnal
+Route::get('/jurnal-publik', [App\Http\Controllers\JournalController::class, 'publicIndex'])->name('journals.public');
+// Pastikan penulisan name-nya persis seperti ini
+Route::get('/cek-jurnal', [JournalController::class, 'publicIndex'])->name('journals.public');
 
 // Rute Admin (Wajib Login)
 Route::middleware(['auth', 'verified'])->group(function () {

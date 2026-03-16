@@ -2,24 +2,21 @@
 
 namespace App\Exports;
 
+use Maatwebsite\Excel\Concerns\FromArray;
 use Maatwebsite\Excel\Concerns\WithHeadings;
-use Maatwebsite\Excel\Concerns\WithTitle;
-use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 
-class TeacherTemplateExport implements WithHeadings, WithTitle, ShouldAutoSize
+class TeacherTemplateExport implements FromArray, WithHeadings
 {
-    public function headings(): array
+    public function array(): array
     {
         return [
-            'nip',
-            'nama_guru',
-            'nomor_hp',
-            'status'
+            ['198501012010011001', 'Budi Santoso, S.Pd', '08123456789', 'Aktif'],
+            ['', 'Siti Aminah, M.Pd', '', 'Aktif'],
         ];
     }
 
-    public function title(): string
+    public function headings(): array
     {
-        return 'Template Import Guru';
+        return ['nip', 'nama_guru', 'no_hp', 'status'];
     }
 }

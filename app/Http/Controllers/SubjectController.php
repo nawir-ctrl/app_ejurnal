@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Imports\SubjectsImport;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\TeacherTemplateExport;
+use App\Exports\SubjectTemplateExport;
 
 class SubjectController extends Controller
 {
