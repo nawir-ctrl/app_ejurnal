@@ -29,6 +29,16 @@
                     </div>
 
                     <div>
+                        <label class="block text-sm font-medium text-slate-300 mb-2">Status Kepegawaian</label>
+                        <select name="employment_status" class="bg-slate-900 border border-slate-700 text-white rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                            <option value="GTY" {{ old('employment_status') == 'GTY' ? 'selected' : '' }}>GTY</option>
+                            <option value="GTT" {{ old('employment_status', 'GTT') == 'GTT' ? 'selected' : '' }}>GTT</option>
+                            <option value="PNS" {{ old('employment_status') == 'PNS' ? 'selected' : '' }}>PNS</option>
+                        </select>
+                        @error('employment_status') <span class="text-red-400 text-xs mt-1">{{ $message }}</span> @enderror
+                    </div>
+
+                    <div>
                         <label class="block text-sm font-medium text-slate-300 mb-2">Status</label>
                         <select name="status" class="bg-slate-900 border border-slate-700 text-white rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
                             <option value="Aktif">Aktif</option>

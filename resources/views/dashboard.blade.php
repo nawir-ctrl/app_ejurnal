@@ -5,11 +5,11 @@
         </h2>
     </x-slot>
 
-    <div class="py-12">
+    <div class="py-6 sm:py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-                <div class="bg-slate-800/50 backdrop-blur-xl border border-slate-700/50 rounded-2xl p-6 shadow-lg hover:shadow-blue-500/10 transition-all">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 mb-6 sm:mb-8 px-4 sm:px-0">
+                <div class="panel rounded-xl sm:rounded-2xl p-5 sm:p-6 hover:shadow-blue-500/10 transition-all">
                     <div class="flex items-center justify-between">
                         <div>
                             <p class="text-sm font-medium text-slate-400 mb-1">Jurnal Hari Ini</p>
@@ -21,7 +21,7 @@
                     </div>
                 </div>
 
-                <div class="bg-slate-800/50 backdrop-blur-xl border border-slate-700/50 rounded-2xl p-6 shadow-lg hover:shadow-purple-500/10 transition-all">
+                <div class="panel rounded-xl sm:rounded-2xl p-5 sm:p-6 hover:shadow-purple-500/10 transition-all">
                     <div class="flex items-center justify-between">
                         <div>
                             <p class="text-sm font-medium text-slate-400 mb-1">Total Guru</p>
@@ -33,7 +33,7 @@
                     </div>
                 </div>
 
-                <div class="bg-slate-800/50 backdrop-blur-xl border border-slate-700/50 rounded-2xl p-6 shadow-lg hover:shadow-pink-500/10 transition-all">
+                <div class="panel rounded-xl sm:rounded-2xl p-5 sm:p-6 hover:shadow-pink-500/10 transition-all">
                     <div class="flex items-center justify-between">
                         <div>
                             <p class="text-sm font-medium text-slate-400 mb-1">Total Kelas</p>
@@ -46,10 +46,10 @@
                 </div>
             </div>
 
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                <div class="lg:col-span-2 bg-slate-800/50 backdrop-blur-xl border border-slate-700/50 rounded-2xl p-6 shadow-2xl">
-                    <div class="flex items-center justify-between mb-6">
-                        <h3 class="text-lg font-semibold text-slate-200">Aktivitas Mengajar Hari Ini</h3>
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8 px-4 sm:px-0">
+                <div class="lg:col-span-2 panel rounded-xl sm:rounded-2xl p-4 sm:p-6">
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-5 sm:mb-6">
+                        <h3 class="text-base sm:text-lg font-semibold text-slate-200">Aktivitas Mengajar Hari Ini</h3>
                         <span class="text-xs bg-blue-500/20 text-blue-400 px-2 py-1 rounded">{{ date('d M Y') }}</span>
                     </div>
                     <div class="overflow-x-auto">
@@ -83,7 +83,7 @@
                     </div>
                 </div>
 
-                <div class="bg-slate-800/50 backdrop-blur-xl border border-slate-700/50 rounded-2xl p-6 shadow-2xl">
+                <div class="panel rounded-xl sm:rounded-2xl p-4 sm:p-6">
                     <h3 class="text-lg font-semibold text-slate-200 mb-6">Tren 7 Hari</h3>
                     <div class="relative h-64 w-full">
                         <canvas id="activityChart"></canvas>

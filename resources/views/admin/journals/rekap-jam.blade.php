@@ -5,37 +5,46 @@
         </h2>
     </x-slot>
 
-    <div class="py-12">
+    <div class="py-6 sm:py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             
-            <div class="bg-slate-800/50 backdrop-blur-xl border border-slate-700/50 rounded-2xl p-6 mb-6 shadow-lg">
+            <div class="panel rounded-xl sm:rounded-2xl p-4 sm:p-6 mb-6 mx-4 sm:mx-0">
                 <form action="{{ route('journals.rekap-jam') }}" method="GET" class="mb-0">
-                    <div class="grid grid-cols-1 md:grid-cols-4 gap-4 items-end">
+                    <div class="grid grid-cols-1 md:grid-cols-5 gap-4 items-end">
                         <div>
                             <label class="block text-xs font-medium text-slate-400 mb-1">Dari Tanggal</label>
-                            <input type="date" name="start_date" value="{{ $startDate }}" required class="bg-slate-900 border border-slate-700 text-white rounded-lg text-sm block w-full p-2 focus:ring-blue-500">
+                            <input type="date" name="start_date" value="{{ $startDate }}" required class="touch-field bg-slate-900 border border-slate-700 text-white block w-full p-2 focus:ring-blue-500">
                         </div>
                         <div>
                             <label class="block text-xs font-medium text-slate-400 mb-1">Sampai Tanggal</label>
-                            <input type="date" name="end_date" value="{{ $endDate }}" required class="bg-slate-900 border border-slate-700 text-white rounded-lg text-sm block w-full p-2 focus:ring-blue-500">
+                            <input type="date" name="end_date" value="{{ $endDate }}" required class="touch-field bg-slate-900 border border-slate-700 text-white block w-full p-2 focus:ring-blue-500">
                         </div>
                         <div>
                             <label class="block text-xs font-medium text-slate-400 mb-1">Nominal Honor / Jam (Rp)</label>
-                            <input type="number" name="honor_per_jam" value="{{ $honorPerJam }}" required min="0" step="1000" class="bg-slate-900 border border-slate-700 text-white rounded-lg text-sm block w-full p-2 focus:ring-green-500">
+                            <input type="number" name="honor_per_jam" value="{{ $honorPerJam }}" required min="0" step="1000" class="touch-field bg-slate-900 border border-slate-700 text-white block w-full p-2 focus:ring-green-500">
                         </div>
                         <div>
-                            <button type="submit" class="w-full bg-blue-600 hover:bg-blue-500 text-white rounded-lg p-2 text-sm font-medium transition-colors shadow-lg shadow-blue-500/30">
+                            <label class="block text-xs font-medium text-slate-400 mb-1">Status Kepegawaian</label>
+                            <select name="employment_status" class="touch-field bg-slate-900 border border-slate-700 text-white block w-full p-2 focus:ring-blue-500">
+                                <option value="">Semua</option>
+                                <option value="GTY" {{ $employmentStatus == 'GTY' ? 'selected' : '' }}>GTY</option>
+                                <option value="GTT" {{ $employmentStatus == 'GTT' ? 'selected' : '' }}>GTT</option>
+                                <option value="PNS" {{ $employmentStatus == 'PNS' ? 'selected' : '' }}>PNS</option>
+                            </select>
+                        </div>
+                        <div>
+                            <button type="submit" class="w-full touch-button bg-blue-600 hover:bg-blue-500 text-white p-2 text-sm font-medium transition-colors shadow-lg shadow-blue-500/30">
                                 Hitung Kalkulasi
                             </button>
                         </div>
                     </div>
                     
-                    <div class="flex justify-end gap-3 mt-4 pt-4 border-t border-slate-700/50">
-                        <button type="submit" formaction="{{ route('journals.rekap.pdf') }}" formtarget="_blank" class="bg-red-500 hover:bg-red-400 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors shadow-lg shadow-red-500/30 flex items-center gap-2">
+                    <div class="grid grid-cols-2 sm:flex sm:justify-end gap-3 mt-4 pt-4 border-t border-slate-700/50">
+                        <button type="submit" formaction="{{ route('journals.rekap.pdf') }}" formtarget="_blank" class="touch-button bg-red-500 hover:bg-red-400 text-white px-4 py-2 text-sm font-medium transition-colors shadow-lg shadow-red-500/30 flex items-center justify-center gap-2">
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
                             Export PDF
                         </button>
-                        <button type="submit" formaction="{{ route('journals.rekap.excel') }}" class="bg-emerald-600 hover:bg-emerald-500 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors shadow-lg shadow-emerald-500/30 flex items-center gap-2">
+                        <button type="submit" formaction="{{ route('journals.rekap.excel') }}" class="touch-button bg-emerald-600 hover:bg-emerald-500 text-white px-4 py-2 text-sm font-medium transition-colors shadow-lg shadow-emerald-500/30 flex items-center justify-center gap-2">
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
                             Export Excel
                         </button>
@@ -43,13 +52,63 @@
                 </form>
             </div>
 
-            <div class="bg-slate-800/50 backdrop-blur-xl border border-slate-700/50 rounded-2xl overflow-hidden shadow-2xl">
+            <div class="md:hidden space-y-3 px-4 sm:px-0">
+                @php $mobileTotalJam = 0; $mobileTotalHonor = 0; @endphp
+                @forelse($rekapData as $index => $data)
+                    @if($data->total_hours > 0)
+                        @php
+                            $honor = $data->total_hours * $honorPerJam;
+                            $mobileTotalJam += $data->total_hours;
+                            $mobileTotalHonor += $honor;
+                        @endphp
+                        <article class="panel rounded-xl p-4">
+                            <div class="flex items-start justify-between gap-3">
+                                <div class="min-w-0">
+                                    <h3 class="font-semibold text-white leading-snug">{{ $data->teacher->name }}</h3>
+                                    <p class="mt-1 text-xs font-mono text-slate-500">{{ $data->teacher->nip ?? '-' }}</p>
+                                </div>
+                                <span class="shrink-0 rounded-full bg-blue-500/20 px-2.5 py-1 text-xs font-bold text-blue-300">{{ $data->teacher->employment_status }}</span>
+                            </div>
+                            <div class="mt-4 grid grid-cols-3 gap-2 text-center">
+                                <div class="rounded-xl bg-slate-900 p-3">
+                                    <div class="text-xs text-slate-500">Jurnal</div>
+                                    <div class="mt-1 font-bold text-white">{{ $data->total_journals }}</div>
+                                </div>
+                                <div class="rounded-xl bg-blue-500/10 p-3">
+                                    <div class="text-xs text-blue-300">Jam</div>
+                                    <div class="mt-1 font-bold text-blue-300">{{ $data->total_hours }}</div>
+                                </div>
+                                <div class="rounded-xl bg-emerald-500/10 p-3">
+                                    <div class="text-xs text-emerald-300">Honor</div>
+                                    <div class="mt-1 text-xs font-bold text-emerald-300">Rp {{ number_format($honor, 0, ',', '.') }}</div>
+                                </div>
+                            </div>
+                        </article>
+                    @endif
+                @empty
+                    <div class="panel rounded-xl px-5 py-10 text-center text-slate-500">Belum ada data mengajar di rentang tanggal ini.</div>
+                @endforelse
+
+                <div class="panel rounded-xl p-4">
+                    <div class="flex items-center justify-between text-sm">
+                        <span class="text-slate-400">Total Jam</span>
+                        <span class="font-bold text-blue-300">{{ $mobileTotalJam }} Jam</span>
+                    </div>
+                    <div class="mt-2 flex items-center justify-between text-sm">
+                        <span class="text-slate-400">Total Honor</span>
+                        <span class="font-bold text-emerald-300">Rp {{ number_format($mobileTotalHonor, 0, ',', '.') }}</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="hidden md:block bg-slate-800/50 backdrop-blur-xl border border-slate-700/50 rounded-2xl overflow-hidden shadow-2xl">
                 <div class="overflow-x-auto">
                     <table class="w-full text-left text-sm text-slate-300">
                         <thead class="bg-slate-900/50 text-slate-400 uppercase text-xs">
                             <tr>
                                 <th class="px-6 py-4 font-medium w-16 text-center">No</th>
                                 <th class="px-6 py-4 font-medium">Nama Guru</th>
+                                <th class="px-6 py-4 font-medium text-center">Kepegawaian</th>
                                 <th class="px-6 py-4 font-medium text-center">Jurnal</th>
                                 <th class="px-6 py-4 font-medium text-center text-blue-400">Total Jam</th>
                                 <th class="px-6 py-4 font-medium text-right text-green-400">Estimasi Honor (Rp)</th>
@@ -69,18 +128,19 @@
                                         <td class="px-6 py-4 font-medium text-white">
                                             {{ $data->teacher->name }}<br><span class="text-xs text-slate-500">{{ $data->teacher->nip ?? '-' }}</span>
                                         </td>
+                                        <td class="px-6 py-4 text-center"><span class="bg-blue-500/20 text-blue-300 px-2 py-1 rounded text-xs">{{ $data->teacher->employment_status }}</span></td>
                                         <td class="px-6 py-4 text-center"><span class="bg-slate-700 text-white px-2 py-1 rounded text-xs">{{ $data->total_journals }} Kali</span></td>
                                         <td class="px-6 py-4 text-center"><span class="bg-blue-500/20 text-blue-400 px-3 py-1 rounded-full font-bold text-sm">{{ $data->total_hours }} Jam</span></td>
                                         <td class="px-6 py-4 text-right font-bold text-green-400">Rp {{ number_format($honor, 0, ',', '.') }}</td>
                                     </tr>
                                 @endif
                             @empty
-                            <tr><td colspan="5" class="px-6 py-8 text-center text-slate-500">Belum ada data mengajar di rentang tanggal ini.</td></tr>
+                            <tr><td colspan="6" class="px-6 py-8 text-center text-slate-500">Belum ada data mengajar di rentang tanggal ini.</td></tr>
                             @endforelse
                         </tbody>
                         <tfoot class="bg-slate-900/80 font-bold text-white">
                             <tr>
-                                <td colspan="3" class="px-6 py-4 text-right">TOTAL KESELURUHAN :</td>
+                                <td colspan="4" class="px-6 py-4 text-right">TOTAL KESELURUHAN :</td>
                                 <td class="px-6 py-4 text-center text-blue-400">{{ $grandTotalJam }} Jam</td>
                                 <td class="px-6 py-4 text-right text-green-400">Rp {{ number_format($grandTotalHonor, 0, ',', '.') }}</td>
                             </tr>

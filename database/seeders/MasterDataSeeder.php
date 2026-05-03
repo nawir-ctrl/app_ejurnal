@@ -49,30 +49,35 @@ class MasterDataSeeder extends Seeder
                 'nip' => '198001012005011001',
                 'name' => 'Ahmad Fauzi, S.Kom.',
                 'phone' => '081234567890',
+                'employment_status' => 'PNS',
                 'status' => 'Aktif'
             ],
             [
                 'nip' => '198502022010012002',
                 'name' => 'Siti Aminah, S.Pd.',
                 'phone' => '081298765432',
+                'employment_status' => 'GTY',
                 'status' => 'Aktif'
             ],
             [
                 'nip' => null,
                 'name' => 'Budi Santoso, S.T.',
                 'phone' => '085612345678',
+                'employment_status' => 'GTT',
                 'status' => 'Aktif'
             ],
             [
                 'nip' => '199004042015022004',
                 'name' => 'Ratna Sari, S.Pd.I.',
                 'phone' => '087766554433',
+                'employment_status' => 'GTY',
                 'status' => 'Cuti'
             ],
             [
                 'nip' => '196005051985031005',
                 'name' => 'Drs. H. Abdullah',
                 'phone' => null,
+                'employment_status' => 'PNS',
                 'status' => 'Pensiun'
             ]
         ];

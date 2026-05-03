@@ -75,11 +75,13 @@ class AdminJournalController extends Controller
 
     // --- FITUR REKAP JAM & HONOR ---
 
-    private function getRekapData($startDate, $endDate)
+    private function getRekapData($startDate, $endDate, $employmentStatus = null)
     {
         $teachers = Teacher::with(['journals' => function($query) use ($startDate, $endDate) {
             $query->whereBetween('date', [$startDate, $endDate]);
-        }])->get();
+        }])
+        ->when($employmentStatus, fn($query, $status) => $query->where('employment_status', $status))
+        ->get();
 
         return $teachers->map(function ($teacher) {
             $totalHours = $teacher->journals->sum(function ($journal) {
@@ -98,10 +100,11 @@ class AdminJournalController extends Controller
         $startDate = $request->input('start_date', now()->startOfMonth()->toDateString());
         $endDate = $request->input('end_date', now()->endOfMonth()->toDateString());
         $honorPerJam = $request->input('honor_per_jam', 50000); 
+        $employmentStatus = $request->input('employment_status');
 
-        $rekapData = $this->getRekapData($startDate, $endDate);
+        $rekapData = $this->getRekapData($startDate, $endDate, $employmentStatus);
 
-        return view('admin.journals.rekap-jam', compact('rekapData', 'startDate', 'endDate', 'honorPerJam'));
+        return view('admin.journals.rekap-jam', compact('rekapData', 'startDate', 'endDate', 'honorPerJam', 'employmentStatus'));
     }
 
     public function exportRekapPdf(Request $request)
@@ -110,10 +113,11 @@ class AdminJournalController extends Controller
         $startDate = $request->input('start_date', now()->startOfMonth()->toDateString());
         $endDate = $request->input('end_date', now()->endOfMonth()->toDateString());
         $honorPerJam = $request->input('honor_per_jam', 50000);
+        $employmentStatus = $request->input('employment_status');
 
-        $rekapData = $this->getRekapData($startDate, $endDate)->filter(fn($item) => $item->total_hours > 0);
+        $rekapData = $this->getRekapData($startDate, $endDate, $employmentStatus)->filter(fn($item) => $item->total_hours > 0);
 
-        $pdf = Pdf::loadView('admin.journals.rekap-pdf', compact('rekapData', 'startDate', 'endDate', 'honorPerJam', 'profile'))
+        $pdf = Pdf::loadView('admin.journals.rekap-pdf', compact('rekapData', 'startDate', 'endDate', 'honorPerJam', 'profile', 'employmentStatus'))
                   ->setPaper('a4', 'portrait');
         return $pdf->download('Rekap-Honor-'.now()->format('YmdHi').'.pdf');
     }

@@ -1,10 +1,10 @@
 <nav x-data="{ open: false }" class="bg-slate-900/80 backdrop-blur-md border-b border-slate-800 sticky top-0 z-50">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex justify-between h-16">
-            <div class="flex">
+        <div class="flex justify-between min-h-16">
+            <div class="flex min-w-0">
                 <div class="shrink-0 flex items-center">
-                    <a href="{{ route('dashboard') }}" class="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-500 flex items-center gap-2">
-                        <svg class="w-6 h-6 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
+                    <a href="{{ route('dashboard') }}" class="text-lg sm:text-xl font-bold text-white flex items-center gap-2">
+                        <svg class="w-6 h-6 shrink-0 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
                         Admin
                     </a>
                 </div>
@@ -89,6 +89,7 @@
             <x-responsive-nav-link :href="route('journals.index')" :active="request()->routeIs('journals.index')" class="text-slate-300">Data Jurnal</x-responsive-nav-link>
             <x-responsive-nav-link :href="route('journals.rekap-jam')" :active="request()->routeIs('journals.rekap-jam')" class="text-slate-300">Rekap Jam</x-responsive-nav-link>
             <x-responsive-nav-link :href="route('teachers.index')" :active="request()->routeIs('teachers.*')" class="text-slate-300">Guru</x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('subjects.index')" :active="request()->routeIs('subjects.*')" class="text-slate-300">Mapel</x-responsive-nav-link>
             <x-responsive-nav-link :href="route('classrooms.index')" :active="request()->routeIs('classrooms.*')" class="text-slate-300">Kelas</x-responsive-nav-link>
             <x-responsive-nav-link :href="route('school-profile.edit')" :active="request()->routeIs('school-profile.*')" class="text-blue-400">Profil Sekolah</x-responsive-nav-link>
             <x-responsive-nav-link :href="route('home')" target="_blank" class="text-purple-400">Form Publik ↗</x-responsive-nav-link>

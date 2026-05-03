@@ -1,3 +1,43 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+    html {
+        -webkit-text-size-adjust: 100%;
+    }
+
+    input,
+    select,
+    textarea,
+    button {
+        font-size: 16px;
+    }
+
+    @screen sm {
+        input,
+        select,
+        textarea,
+        button {
+            font-size: 14px;
+        }
+    }
+}
+
+@layer components {
+    .mobile-shell {
+        @apply px-4 sm:px-6 lg:px-8;
+    }
+
+    .touch-field {
+        @apply min-h-[46px] rounded-xl;
+    }
+
+    .touch-button {
+        @apply min-h-[46px] rounded-xl;
+    }
+
+    .panel {
+        @apply bg-slate-800/50 backdrop-blur-xl border border-slate-700/50 shadow-xl;
+    }
+}

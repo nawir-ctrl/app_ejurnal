@@ -21,10 +21,13 @@ class RekapJamExport implements FromCollection, WithHeadings, WithMapping
     {
         $startDate = $this->request->input('start_date', now()->startOfMonth()->toDateString());
         $endDate = $this->request->input('end_date', now()->endOfMonth()->toDateString());
+        $employmentStatus = $this->request->input('employment_status');
 
         $teachers = Teacher::with(['journals' => function($query) use ($startDate, $endDate) {
             $query->whereBetween('date', [$startDate, $endDate]);
-        }])->get();
+        }])
+        ->when($employmentStatus, fn($query, $status) => $query->where('employment_status', $status))
+        ->get();
 
         return $teachers->map(function ($teacher) {
             $totalHours = $teacher->journals->sum(function ($journal) {
@@ -43,7 +46,7 @@ class RekapJamExport implements FromCollection, WithHeadings, WithMapping
 
     public function headings(): array
     {
-        return ['No', 'Nama Guru', 'NIP', 'Total Mengisi Jurnal', 'Total Jam', 'Honor Per Jam', 'Total Honor'];
+        return ['No', 'Nama Guru', 'NIP', 'Status Kepegawaian', 'Total Mengisi Jurnal', 'Total Jam', 'Honor Per Jam', 'Total Honor'];
     }
 
     public function map($row): array
@@ -56,6 +59,7 @@ class RekapJamExport implements FromCollection, WithHeadings, WithMapping
             $number,
             $row->teacher->name,
             $row->teacher->nip ?? '-',
+            $row->teacher->employment_status,
             $row->total_journals . ' Kali',
             $row->total_hours . ' Jam',
             $honorPerJam,

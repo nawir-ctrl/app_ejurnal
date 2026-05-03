@@ -38,12 +38,17 @@
     </div>
 
     <center><h3>REKAPITULASI HONOR MENGAJAR GURU</h3></center>
+    <p>
+        Periode: {{ \Carbon\Carbon::parse($startDate)->format('d/m/Y') }} - {{ \Carbon\Carbon::parse($endDate)->format('d/m/Y') }}<br>
+        Status Kepegawaian: {{ $employmentStatus ?: 'Semua' }}
+    </p>
 
     <table class="data-table">
         <thead>
             <tr>
                 <th>No</th>
                 <th>Nama Guru</th>
+                <th>Kepegawaian</th>
                 <th>Total Jurnal</th>
                 <th>Total Jam</th>
                 <th>Total Honor</th>
@@ -60,6 +65,7 @@
                 <tr>
                     <td align="center">{{ $index + 1 }}</td>
                     <td>{{ $data->teacher->name }}<br><small>NIP: {{ $data->teacher->nip ?? '-' }}</small></td>
+                    <td align="center">{{ $data->teacher->employment_status }}</td>
                     <td align="center">{{ $data->total_journals }}</td>
                     <td align="center">{{ $data->total_hours }}</td>
                     <td align="right">Rp {{ number_format($honor, 0, ',', '.') }}</td>
@@ -67,7 +73,7 @@
             @endforeach
         </tbody>
         <tr style="background: #f0f0f0; font-weight: bold">
-            <td colspan="3" align="right">GRAND TOTAL</td>
+            <td colspan="4" align="right">GRAND TOTAL</td>
             <td align="center">{{ $totalJam }}</td>
             <td align="right">Rp {{ number_format($totalHonor, 0, ',', '.') }}</td>
         </tr>

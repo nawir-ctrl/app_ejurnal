@@ -27,6 +27,7 @@ class TeacherController extends Controller
             'nip' => 'nullable|string|max:20|unique:teachers,nip',
             'name' => 'required|string|max:255',
             'phone' => 'nullable|string|max:20',
+            'employment_status' => 'required|in:GTY,GTT,PNS',
             'status' => 'required|in:Aktif,Cuti,Pensiun',
         ]);
 
@@ -45,6 +46,7 @@ class TeacherController extends Controller
             'nip' => 'nullable|string|max:20|unique:teachers,nip,' . $teacher->id,
             'name' => 'required|string|max:255',
             'phone' => 'nullable|string|max:20',
+            'employment_status' => 'required|in:GTY,GTT,PNS',
             'status' => 'required|in:Aktif,Cuti,Pensiun',
         ]);
 

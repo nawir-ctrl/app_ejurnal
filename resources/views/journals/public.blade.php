@@ -1,15 +1,15 @@
 @extends('layouts.public')
 
 @section('content')
-<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+<div class="max-w-7xl mx-auto mobile-shell py-4 sm:py-8">
     
-    <div class="flex flex-col md:flex-row justify-between items-center gap-6 mb-10">
+    <div class="flex flex-col md:flex-row justify-between items-stretch md:items-center gap-4 sm:gap-6 mb-6 sm:mb-10">
         <div class="text-center md:text-left">
-            <h1 class="text-3xl md:text-4xl font-extrabold tracking-tight text-white">E-Jurnal Guru MTs</h1>
-            <p class="text-slate-400 mt-2 text-lg">Rekapitulasi kegiatan belajar mengajar harian.</p>
+            <h1 class="text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-tight text-white leading-tight">E-Jurnal Guru MTs</h1>
+            <p class="text-slate-400 mt-2 text-sm sm:text-lg">Rekapitulasi kegiatan belajar mengajar harian.</p>
         </div>
         
-        <a href="{{ url('/') }}" class="inline-flex items-center gap-2 bg-slate-800 hover:bg-slate-700 text-white px-6 py-3 rounded-2xl text-sm font-bold transition-all border border-slate-700 shadow-xl group">
+        <a href="{{ url('/') }}" class="touch-button inline-flex items-center justify-center gap-2 bg-slate-800 hover:bg-slate-700 text-white px-5 py-3 rounded-xl text-sm font-bold transition-all border border-slate-700 shadow-xl group">
             <svg class="w-5 h-5 transform group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
             </svg>
@@ -17,12 +17,12 @@
         </a>
     </div>
 
-    <div class="bg-slate-800/50 backdrop-blur-xl border border-slate-700/50 p-6 rounded-3xl shadow-2xl mb-8">
+    <div class="panel p-4 sm:p-6 rounded-xl sm:rounded-2xl mb-6 sm:mb-8">
     <form action="{{ route('journals.public') }}" method="GET" class="flex flex-col md:flex-row gap-4 items-end">
         <div class="relative flex-1 w-full">
             <label class="block text-slate-400 text-xs mb-2 ml-1">Pencarian</label>
             <input type="text" name="search" value="{{ request('search') }}" placeholder="Cari nama guru, kelas, atau materi..." 
-                class="w-full bg-slate-900 border-slate-700 text-slate-200 rounded-2xl py-3.5 pl-12 focus:ring-2 focus:ring-blue-500 transition-all outline-none">
+                class="w-full touch-field bg-slate-900 border-slate-700 text-slate-200 py-3.5 pl-12 focus:ring-2 focus:ring-blue-500 transition-all outline-none">
             <div class="absolute left-4 top-10 text-slate-500">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
             </div>
@@ -30,7 +30,7 @@
 
         <div class="w-full md:w-32">
             <label class="block text-slate-400 text-xs mb-2 ml-1">Tampilkan</label>
-            <select name="per_page" onchange="this.form.submit()" class="w-full bg-slate-900 border-slate-700 text-slate-200 rounded-2xl py-3.5 px-4 focus:ring-2 focus:ring-blue-500 outline-none cursor-pointer">
+            <select name="per_page" onchange="this.form.submit()" class="w-full touch-field bg-slate-900 border-slate-700 text-slate-200 py-3.5 px-4 focus:ring-2 focus:ring-blue-500 outline-none cursor-pointer">
                 <option value="10" {{ request('per_page') == '10' ? 'selected' : '' }}>10 baris</option>
                 <option value="25" {{ request('per_page') == '25' ? 'selected' : '' }}>25 baris</option>
                 <option value="50" {{ request('per_page') == '50' ? 'selected' : '' }}>50 baris</option>
@@ -38,13 +38,35 @@
             </select>
         </div>
 
-        <button type="submit" class="w-full md:w-auto bg-blue-600 hover:bg-blue-500 text-white px-10 py-3.5 rounded-2xl font-bold transition-all shadow-lg shadow-blue-600/20">
+        <button type="submit" class="w-full md:w-auto touch-button bg-blue-600 hover:bg-blue-500 text-white px-10 py-3.5 font-bold transition-all shadow-lg shadow-blue-600/20">
             Filter
         </button>
     </form>
 </div>
 
-    <div class="bg-slate-800/50 backdrop-blur-xl border border-slate-700/50 rounded-3xl overflow-hidden shadow-2xl">
+    <div class="md:hidden space-y-3">
+        @forelse($journals as $journal)
+            <article class="panel rounded-xl p-4">
+                <div class="flex items-start justify-between gap-3">
+                    <div class="min-w-0">
+                        <div class="text-xs font-mono text-blue-400">{{ \Carbon\Carbon::parse($journal->date)->format('d/m/Y') }} · Jam {{ $journal->time_slot }}</div>
+                        <h2 class="mt-1 text-base font-bold text-white leading-snug">{{ $journal->teacher->name }}</h2>
+                    </div>
+                    <span class="shrink-0 rounded-full border border-emerald-500/20 bg-emerald-500/10 px-2.5 py-1 text-[10px] font-bold text-emerald-400">Terekam</span>
+                </div>
+                <div class="mt-3 flex flex-wrap gap-2 text-xs">
+                    <span class="rounded-lg bg-slate-900 px-2.5 py-1 text-slate-300">{{ $journal->classroom->name }}</span>
+                    <span class="rounded-lg bg-slate-900 px-2.5 py-1 text-slate-300">{{ $journal->subject->name }}</span>
+                </div>
+                <p class="mt-3 text-sm leading-relaxed text-slate-300">{{ Str::limit($journal->material, 120) }}</p>
+                <p class="mt-2 text-xs italic text-slate-500">Kehadiran: {{ $journal->attendance ?? 'Nihil' }}</p>
+            </article>
+        @empty
+            <div class="panel rounded-xl px-5 py-12 text-center text-slate-500">Data jurnal belum tersedia.</div>
+        @endforelse
+    </div>
+
+    <div class="hidden md:block bg-slate-800/50 backdrop-blur-xl border border-slate-700/50 rounded-2xl overflow-hidden shadow-2xl">
         <div class="overflow-x-auto">
             <table class="w-full text-left text-sm text-slate-300">
                 <thead class="bg-slate-900/80 text-slate-400 uppercase text-[10px] font-bold tracking-widest">
